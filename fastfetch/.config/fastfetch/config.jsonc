@@ -1,0 +1,182 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "source": "arch",
+    "color": {
+      "1": "137;180;250",
+      "2": "203;166;247"
+    },
+    "padding": {
+      "right": 2
+    }
+  },
+  "display": {
+    "separator": "  ",
+    "color": {
+      "output": "205;214;244"
+    },
+    "percent": {
+      "type": 3,
+      "colorGreen": "166;227;161",
+      "colorYellow": "249;226;175",
+      "colorRed": "243;139;168"
+    },
+    "bar": {
+      "char": {
+        "elapsed": "█",
+        "total": " "
+      },
+      "width": 28
+    }
+  },
+  "modules": [
+    {
+      "type": "title",
+      "format": "  {#203;166;247}󰮯 {6}{#137;180;250}@{#205;214;244}{7}",
+      "keyWidth": 0
+    },
+    {
+      "type": "custom",
+      "format": "{#88;91;112}───────────────────────────────────────────────────────────────────────────{#}"
+    },
+    {
+      "type": "os",
+      "key": "  {#137;180;250}󰣇 OS        ",
+      "keyWidth": 16
+    },
+    {
+      "type": "host",
+      "key": "  {#116;199;236}󰌢 HOST      ",
+      "keyWidth": 16
+    },
+    {
+      "type": "kernel",
+      "key": "  {#166;227;161} KERNEL    ",
+      "keyWidth": 16
+    },
+    {
+      "type": "uptime",
+      "key": "  {#249;226;175}󱑌 UPTIME    ",
+      "keyWidth": 16
+    },
+    {
+      "type": "packages",
+      "key": "  {#203;166;247}󰏖 PACKAGES  ",
+      "keyWidth": 16
+    },
+    {
+      "type": "shell",
+      "key": "  {#137;220;235} SHELL     ",
+      "keyWidth": 16
+    },
+    {
+      "type": "custom",
+      "format": "{#88;91;112}───────────────────────────────────────────────────────────────────────────{#}"
+    },
+    {
+      "type": "display",
+      "key": "  {#243;139;168}󰍹 DISPLAY   ",
+      "keyWidth": 16
+    },
+    {
+      "type": "wm",
+      "key": "  {#203;166;247}󱂬 WM        ",
+      "keyWidth": 16
+    },
+    {
+      "type": "theme",
+      "key": "  {#245;194;231}󰉼 THEME     ",
+      "keyWidth": 16
+    },
+    {
+      "type": "icons",
+      "key": "  {#166;227;161}󰀻 ICONS     ",
+      "keyWidth": 16
+    },
+    {
+      "type": "font",
+      "key": "  {#249;226;175} FONT      ",
+      "keyWidth": 16
+    },
+    {
+      "type": "cursor",
+      "key": "  {#137;220;235}󰳽 CURSOR    ",
+      "keyWidth": 16
+    },
+    {
+      "type": "terminal",
+      "key": "  {#116;199;236} TERMINAL  ",
+      "keyWidth": 16
+    },
+    {
+      "type": "terminalfont",
+      "key": "  {#137;180;250} TERM FONT ",
+      "keyWidth": 16
+    },
+    {
+      "type": "custom",
+      "format": "{#88;91;112}───────────────────────────────────────────────────────────────────────────{#}"
+    },
+    {
+      "type": "cpu",
+      "key": "  {#250;179;135} CPU       ",
+      "keyWidth": 16,
+      "showPeCoreCount": true,
+      "temp": true
+    },
+    {
+      "type": "gpu",
+      "key": "  {#137;180;250}󰍛 GPU       ",
+      "keyWidth": 16,
+      "temp": true,
+      "driverSpecific": false,
+      "detectionMethod": "pci"
+    },
+    {
+      "type": "memory",
+      "key": "  {#249;226;175}󰾆 MEMORY    ",
+      "keyWidth": 16
+    },
+    {
+      "type": "swap",
+      "key": "  {#243;139;168}󰁯 SWAP      ",
+      "keyWidth": 16
+    },
+    {
+      "type": "custom",
+      "format": "{#88;91;112}───────────────────────────────────────────────────────────────────────────{#}"
+    },
+    {
+      "type": "disk",
+      "key": "  {#166;227;161}󰋊 DISK (/)  ",
+      "keyWidth": 16,
+      "folders": "/"
+    },
+    {
+      "type": "disk",
+      "key": "  {#203;166;247}󰋊 DISK HOME ",
+      "keyWidth": 16,
+      "folders": "/home"
+    },
+    {
+      "type": "localip",
+      "key": "  {#116;199;236}󰩠 LOCAL IP  ",
+      "keyWidth": 16
+    },
+    {
+      "type": "locale",
+      "key": "  {#245;194;231}󰗊 LOCALE    ",
+      "keyWidth": 16
+    },
+    {
+      "type": "custom",
+      "format": "{#88;91;112}───────────────────────────────────────────────────────────────────────────{#}"
+    },
+    {
+      "type": "colors",
+      "key": "  {#243;139;168}  PALETTE  ",
+      "keyWidth": 16,
+      "symbol": "circle"
+    }
+  ]
+}
