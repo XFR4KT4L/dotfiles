@@ -1,0 +1,158 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+THEMES_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/thememanager/themes"
+WALLPAPERS_DIR="$HOME/.config/hypr/wallpapers"
+ACTIVE_LINK="${XDG_DATA_HOME:-$HOME/.local/share}/thememanager/active"
+BACKUP_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/thememanager/backups"
+
+DEST_HYPR_THEME="$HOME/.config/hypr/theme.conf"
+DEST_KITTY="$HOME/.config/kitty/kitty.conf"
+DEST_WAYBAR="$HOME/.config/waybar/style.css"
+DEST_WOFI="$HOME/.config/wofi/style.css"
+DEST_MAKO="$HOME/.config/mako/config"
+DEST_GTK3_CSS="$HOME/.config/gtk-3.0/gtk.css"
+DEST_GTK3_INI="$HOME/.config/gtk-3.0/settings.ini"
+
+GRN='\033[0;32m'; CYN='\033[0;36m'; YLW='\033[1;33m'
+RED='\033[0;31m'; BLD='\033[1m'; DIM='\033[2m'; NC='\033[0m'
+ok()   { echo -e "${GRN}[ OK ]${NC} $*"; }
+err()  { echo -e "${RED}[ERR]${NC} $*" >&2; exit 1; }
+info() { echo -e "${CYN}[....] $*${NC}"; }
+warn() { echo -e "${YLW}[WARN]${NC} $*"; }
+
+conf_get() {
+  local file="$1" section="$2" key="$3"
+  awk -F'=' -v sec="[$section]" -v k="$key" '
+    /^\[/ { in_sec = ($0 == sec) }
+    in_sec && $1 ~ "^[[:space:]]*"k"[[:space:]]*$" {
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); print $2; exit
+    }
+  ' "$file"
+}
+
+active_theme_dir() {
+  [ -L "$ACTIVE_LINK" ] && basename "$(readlink "$ACTIVE_LINK")" || echo ""
+}
+
+cmd_list() {
+  echo -e "${BLD}Temas disponibles:${NC}"
+  local current; current=$(active_theme_dir)
+  for d in "$THEMES_DIR"/*/; do
+    [ -f "$d/theme.conf" ] || continue
+    local dir; dir=$(basename "$d")
+    local name; name=$(conf_get "$d/theme.conf" "theme" "name")
+    local desc; desc=$(conf_get "$d/theme.conf" "theme" "description")
+    if [[ "$dir" == "$current" ]]; then
+      echo -e "  ${GRN}▶ ${BLD}$dir${NC}${GRN} — $name${NC}"
+      echo -e "    ${DIM}$desc${NC}"
+    else
+      echo -e "  ${DIM}·${NC} ${BLD}$dir${NC} — $name"
+      echo -e "    ${DIM}$desc${NC}"
+    fi
+  done
+}
+
+cmd_status() {
+  local current; current=$(active_theme_dir)
+  [ -z "$current" ] && echo "Tema activo: ninguno" && return
+  local conf="$THEMES_DIR/$current/theme.conf"
+  echo -e "${BLD}Tema activo:${NC} $current"
+  echo -e "  Nombre:    $(conf_get "$conf" "theme" "name")"
+  echo -e "  Versión:   $(conf_get "$conf" "theme" "version")"
+  echo -e "  GTK:       $(conf_get "$conf" "gtk" "gtk-theme")"
+  echo -e "  Iconos:    $(conf_get "$conf" "gtk" "icon-theme")"
+  echo -e "  Fuente:    $(conf_get "$conf" "gtk" "font")"
+  echo -e "  Wallpaper: $(conf_get "$conf" "wallpaper" "file")"
+}
+
+do_backup() {
+  local ts; ts=$(date +%Y%m%d_%H%M%S)
+  local dir="$BACKUP_DIR/$ts"
+  mkdir -p "$dir"
+  for f in "$DEST_HYPR_THEME" "$DEST_KITTY" "$DEST_WAYBAR" \
+            "$DEST_WOFI" "$DEST_MAKO" "$DEST_GTK3_CSS" "$DEST_GTK3_INI"; do
+    [ -f "$f" ] && cp "$f" "$dir/" 2>/dev/null || true
+  done
+  echo "$dir"
+}
+
+copy_if_exists() {
+  [ -f "$1" ] && cp --remove-destination "$1" "$2" || true
+}
+
+cmd_apply() {
+  local THEME="$1"
+  local DIR="$THEMES_DIR/$THEME"
+  [ ! -d "$DIR" ]            && err "Tema '$THEME' no encontrado en $THEMES_DIR"
+  [ ! -f "$DIR/theme.conf" ] && err "Tema '$THEME' no tiene theme.conf"
+  [[ "$(active_theme_dir)" == "$THEME" ]] && { ok "Tema '$THEME' ya está activo"; return; }
+
+  local name; name=$(conf_get "$DIR/theme.conf" "theme" "name")
+  info "Aplicando tema: ${BLD}$name"
+
+  local backup_dir; backup_dir=$(do_backup)
+  echo -e "  ${DIM}Backup en: $backup_dir${NC}"
+
+  rm -f "$ACTIVE_LINK"
+  ln -sf "$DIR" "$ACTIVE_LINK"
+
+  copy_if_exists "$DIR/hyprland.conf" "$DEST_HYPR_THEME"
+  copy_if_exists "$DIR/kitty.conf"    "$DEST_KITTY"
+  copy_if_exists "$DIR/waybar.css"    "$DEST_WAYBAR"
+  copy_if_exists "$DIR/wofi.css"      "$DEST_WOFI"
+  copy_if_exists "$DIR/mako.conf"     "$DEST_MAKO"
+  copy_if_exists "$DIR/gtk3.ini"      "$DEST_GTK3_INI"
+
+  if [ -f "$DIR/gtk3.css" ]; then
+    cp --remove-destination "$DIR/gtk3.css" "$DEST_GTK3_CSS"
+  else
+    rm -f "$DEST_GTK3_CSS"
+  fi
+
+  gsettings set org.gnome.desktop.interface gtk-theme    "$(conf_get "$DIR/theme.conf" "gtk" "gtk-theme")"   2>/dev/null || warn "gsettings gtk-theme falló"
+  gsettings set org.gnome.desktop.interface icon-theme   "$(conf_get "$DIR/theme.conf" "gtk" "icon-theme")"  2>/dev/null || warn "gsettings icon-theme falló"
+  gsettings set org.gnome.desktop.interface font-name    "$(conf_get "$DIR/theme.conf" "gtk" "font")"        2>/dev/null || warn "gsettings font falló"
+  gsettings set org.gnome.desktop.interface cursor-theme "$(conf_get "$DIR/theme.conf" "gtk" "cursor")"      2>/dev/null || warn "gsettings cursor falló"
+  gsettings set org.gnome.desktop.interface cursor-size  "$(conf_get "$DIR/theme.conf" "gtk" "cursor-size")" 2>/dev/null || warn "gsettings cursor-size falló"
+  gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' 2>/dev/null || true
+
+  local wp_file; wp_file=$(conf_get "$DIR/theme.conf" "wallpaper" "file")
+  local wp_transition; wp_transition=$(conf_get "$DIR/theme.conf" "wallpaper" "transition")
+  local wp_path="$WALLPAPERS_DIR/$wp_file"
+  if [ -n "$wp_file" ] && [ -f "$wp_path" ]; then
+    awww img "$wp_path" --transition-type "$wp_transition" 2>/dev/null || warn "wallpaper no aplicado"
+  else
+    warn "Wallpaper no encontrado: $wp_path"
+  fi
+
+  [ -x "$DIR/hook.sh" ] && bash "$DIR/hook.sh" "$THEME"
+
+  pkill waybar 2>/dev/null || true; setsid waybar &>/dev/null &
+  hyprctl reload              2>/dev/null || warn "hyprctl reload falló"
+  makoctl reload              2>/dev/null || warn "makoctl reload falló"
+  kill -SIGUSR1 "$(pgrep kitty 2>/dev/null)" 2>/dev/null || true
+
+  ok "Tema '${BLD}$name${GRN}' aplicado"
+}
+
+cmd_help() {
+  echo -e "${BLD}theme${NC} — gestor de temas del sistema"
+  echo ""
+  echo -e "${BLD}Uso:${NC}"
+  echo -e "  theme ${CYN}list${NC}           Lista los temas disponibles"
+  echo -e "  theme ${CYN}apply <tema>${NC}   Aplica el tema especificado"
+  echo -e "  theme ${CYN}status${NC}         Muestra el tema activo y sus valores"
+  echo -e "  theme ${CYN}help${NC}           Muestra esta ayuda"
+  echo ""
+  echo -e "${DIM}Temas en:  $THEMES_DIR${NC}"
+  echo -e "${DIM}Backups en: $BACKUP_DIR${NC}"
+}
+
+case "${1:-}" in
+  ""|"list")  cmd_list ;;
+  "status")   cmd_status ;;
+  "apply")    [ -z "${2:-}" ] && err "Especifica un tema: theme apply <tema>"; cmd_apply "$2" ;;
+  "help"|"-h") cmd_help ;;
+  *)          err "Comando desconocido: '$1'. Usa 'theme help'" ;;
+esac

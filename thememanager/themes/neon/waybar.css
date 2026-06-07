@@ -1,0 +1,46 @@
+* {
+  font-family: "Terminess Nerd Font", monospace;
+  font-size: 13px;
+  font-weight: 400;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+window#waybar { background: transparent; }
+window#waybar > box {
+  background-color: #000000;
+  border: 1px solid #9b59d0;
+}
+.modules-left, .modules-center, .modules-right { padding: 0 8px; }
+#workspaces { background: transparent; padding: 0 4px; }
+#workspaces button { padding: 0 8px; min-width: 28px; color: #555555; background: transparent; border-radius: 0; border-bottom: 2px solid transparent; transition: all 0.15s ease; }
+#workspaces button:hover { color: #9b59d0; border-bottom: 2px solid #9b59d0; background: rgba(224,96,161,0.05); }
+#workspaces button.active { color: #9b59d0; border-bottom: 2px solid #9b59d0; background: rgba(224,96,161,0.08); font-weight: 600; }
+#workspaces button.urgent { color: #ff3355; border-bottom: 2px solid #ff3355; }
+#workspaces button.occupied { color: #333333; border-bottom: 2px solid #1a1a1a; }
+#window { color: #555555; font-style: italic; padding: 0 12px; font-size: 12px; }
+#clock { color: #9b59d0; font-weight: 600; padding: 0 16px; letter-spacing: 0.05em; }
+#clock:hover { background: rgba(224,96,161,0.06); }
+#cpu, #memory, #temperature, #network, #pulseaudio, #tray, #custom-power, #custom-gpu {
+  padding: 0 10px; transition: background 0.15s ease;
+}
+#cpu:hover, #memory:hover, #temperature:hover, #network:hover, #pulseaudio:hover, #custom-gpu:hover { background: rgba(255,255,255,0.03); }
+#cpu { color: #00d4ff; }
+#memory { color: #00d4ff; }
+#temperature { color: #00d4ff; }
+#temperature.critical { color: #ff3355; animation: blink 0.8s linear infinite; }
+#network { color: #00cc88; }
+#network.disconnected { color: #333333; }
+#custom-gpu { color: #9b59d0; min-width: 180px; }
+#pulseaudio { color: #9b59d0; }
+#pulseaudio.muted { color: #333333; }
+#cpu.warning, #memory.warning { color: #ffaa00; }
+#cpu.critical, #memory.critical { color: #ff3355; }
+#tray { padding: 0 8px; }
+#tray > .passive { -gtk-icon-effect: dim; }
+#tray > .needs-attention { background: rgba(255,51,85,0.1); }
+#custom-power { color: #ff3355; font-size: 15px; padding: 0 12px; margin-right: 4px; }
+#custom-power:hover { background: rgba(255,51,85,0.1); }
+tooltip { background: #000000; border: 1px solid #9b59d0; border-radius: 0; color: #c0c0c0; font-family: "Terminess Nerd Font", monospace; }
+tooltip label { color: #c0c0c0; }
+@keyframes blink { to { opacity: 0.3; } }

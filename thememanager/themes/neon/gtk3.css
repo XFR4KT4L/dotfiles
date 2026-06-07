@@ -1,0 +1,224 @@
+/* ============================================================
+   GTK3 — NEON OLED v2
+   Sobreescribe colores de acento sobre cualquier tema base
+   Paleta: magenta #e060a1 | púrpura #9b59d0 | fondo #000000
+   ============================================================ */
+
+@define-color accent_color        #9b59d0;
+@define-color accent_bg_color     #9b59d0;
+@define-color accent_fg_color     #ffffff;
+@define-color destructive_color   #ff3355;
+@define-color success_color       #00cc88;
+@define-color warning_color       #ffaa00;
+@define-color error_color         #ff3355;
+
+@define-color window_bg_color     #000000;
+@define-color window_fg_color     #c0c0c0;
+@define-color view_bg_color       #0a0a0a;
+@define-color view_fg_color       #c0c0c0;
+@define-color headerbar_bg_color  #0a0a0a;
+@define-color headerbar_fg_color  #c0c0c0;
+@define-color card_bg_color       #0a0a0a;
+@define-color card_fg_color       #c0c0c0;
+@define-color popover_bg_color    #0a0a0a;
+@define-color popover_fg_color    #c0c0c0;
+@define-color sidebar_bg_color    #000000;
+@define-color sidebar_fg_color    #c0c0c0;
+
+/* Fondo de ventanas */
+window, .window { background-color: #000000; color: #c0c0c0; }
+.background { background-color: #000000; }
+
+/* Headerbar / barra de título */
+headerbar, .titlebar {
+  background-color: #0a0a0a;
+  color: #c0c0c0;
+  border-bottom: 1px solid #1a1a1a;
+  box-shadow: none;
+}
+
+/* Botones */
+button {
+  background-color: #0a0a0a;
+  color: #c0c0c0;
+  border: 1px solid #1a1a1a;
+  border-radius: 0;
+}
+button:hover {
+  background-color: #1a1a1a;
+  border-color: #9b59d0;
+  color: #c0c0c0;
+}
+button:active, button:checked {
+  background-color: #9b59d0;
+  color: #ffffff;
+  border-color: #9b59d0;
+}
+
+/* Selección de texto */
+selection, *:selected {
+  background-color: #9b59d0;
+  color: #ffffff;
+}
+
+/* Links */
+*:link { color: #9b59d0; }
+*:visited { color: #e060a1; }
+
+/* Sidebar (Thunar panel lateral) */
+.sidebar, placessidebar {
+  background-color: #000000;
+  color: #c0c0c0;
+  border-right: 1px solid #1a1a1a;
+}
+.sidebar row:selected, placessidebar row:selected {
+  background-color: rgba(155, 89, 208, 0.15);
+  color: #9b59d0;
+  border-left: 2px solid #9b59d0;
+}
+.sidebar row:hover, placessidebar row:hover {
+  background-color: rgba(155, 89, 208, 0.08);
+}
+
+/* Vista de archivos (Thunar) */
+.view, iconview, treeview {
+  background-color: #000000;
+  color: #c0c0c0;
+}
+.view:selected, iconview:selected, treeview:selected {
+  background-color: rgba(155, 89, 208, 0.2);
+  color: #9b59d0;
+}
+.view:hover, iconview item:hover {
+  background-color: rgba(155, 89, 208, 0.06);
+}
+
+/* Menús */
+menu, .menu, .context-menu {
+  background-color: #0a0a0a;
+  color: #c0c0c0;
+  border: 1px solid #1a1a1a;
+  border-radius: 0;
+}
+menuitem:hover {
+  background-color: rgba(155, 89, 208, 0.15);
+  color: #9b59d0;
+}
+menuitem:selected {
+  background-color: #9b59d0;
+  color: #ffffff;
+}
+
+/* Separadores */
+separator { background-color: #1a1a1a; }
+
+/* Scrollbar */
+scrollbar { background-color: #000000; }
+scrollbar slider {
+  background-color: #1a1a1a;
+  border-radius: 0;
+  min-width: 4px;
+  min-height: 4px;
+}
+scrollbar slider:hover { background-color: #9b59d0; }
+
+/* Entradas de texto */
+entry {
+  background-color: #0a0a0a;
+  color: #c0c0c0;
+  border: 1px solid #1a1a1a;
+  border-radius: 0;
+  caret-color: #9b59d0;
+}
+entry:focus {
+  border-color: #9b59d0;
+  box-shadow: none;
+}
+
+/* Toolbar */
+toolbar {
+  background-color: #0a0a0a;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+/* Notebook / tabs */
+notebook header {
+  background-color: #0a0a0a;
+  border-bottom: 1px solid #1a1a1a;
+}
+notebook tab {
+  background-color: #000000;
+  color: #555555;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+notebook tab:checked {
+  color: #9b59d0;
+  border-bottom: 2px solid #9b59d0;
+}
+
+# internal lines
+treeview.view {
+  border-left: none;
+}
+treeview.view > row {
+  border-bottom: 1px solid #1a1a1a;
+}
+treeview.view > row:selected {
+  border-bottom: 1px solid #9b59d0;
+  border-left: 2px solid #9b59d0;
+}
+
+separator {
+  background: #9b59d0;
+  min-width: 1px;
+  min-height: 1px;
+}
+
+paned > separator {
+  background: #9b59d0;
+  min-width: 1px;
+}
+
+paned > separator {
+  background-color: #9b59d0;
+  min-width: 1px;
+  min-height: 1px;
+  opacity: 1;
+}
+
+paned {
+  border-color: #9b59d0;
+}
+
+rubberband {
+  background-color: rgba(155, 89, 208, 0.15);
+  border: 1px solid #9b59d0;
+}
+
+/* Forzar color en separadores */
+separator,
+paned separator,
+paned > separator {
+  min-width: 1px;
+  min-height: 1px;
+  background-color: #9b59d0;
+  opacity: 1;
+}
+
+rubberband, .rubberband {
+  background-color: rgba(155, 89, 208, 0.15);
+  border: 1px solid #9b59d0;
+}
+
+/* Texto negro en archivos seleccionados */
+iconview item:selected label,
+treeview.view row:selected label,
+.view item:selected label {
+  color: #000000;
+}
+
+iconview:selected, iconview item:selected,
+iconview item:selected > label {
+  color: #000000;
+}

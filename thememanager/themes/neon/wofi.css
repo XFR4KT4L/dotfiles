@@ -1,0 +1,10 @@
+* { font-family: "Iosevka Nerd Font", monospace; font-size: 14px; }
+window { background-color: #000000; border: 1px solid #9b59d0; border-radius: 0; }
+#input { background-color: #0a0a0a; color: #c0c0c0; border: none; border-bottom: 1px solid #9b59d0; border-radius: 0; padding: 10px 14px; margin: 0; outline: none; font-size: 14px; caret-color: #9b59d0; }
+#input::placeholder { color: #333333; }
+#scroll { margin: 0; }
+#inner-box { background: transparent; }
+#entry { padding: 7px 14px; border-radius: 0; margin: 0; color: #555555; border-left: 2px solid transparent; transition: all 0.1s ease; }
+#entry:hover, #entry:selected { background-color: rgba(224,96,161,0.06); color: #9b59d0; border-left: 2px solid #9b59d0; }
+#entry image { margin-right: 10px; }
+#entry label { color: inherit; }
