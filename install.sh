@@ -340,3 +340,7 @@ echo -e "${BLD}${GRN}║     Secure Boot, UFW y DNS cifrado                     
 echo -e "${BLD}${GRN}╚══════════════════════════════════════════════════════════╝${NC}"
 echo ""
 echo -e "  Reinicia con: ${CYN}sudo reboot${NC}"
+
+# Sistema de temas — crear symlink active
+mkdir -p ~/.local/share/thememanager
+ln -sf ~/.local/share/thememanager/themes/catppuccin ~/.local/share/thememanager/active
