@@ -1,28 +1,31 @@
 anchor=top-right
 margin=10
-padding=12,16
+padding=14,16
 width=360
-height=100
+height=120
 max-visible=5
 sort=-time
-font=Iosevka Nerd Font 12
-background-color=#000000ff
-text-color=#c0c0c0
-border-color=#9b59d0
+font=JetBrains Mono 12
+background-color=#24273afa
+text-color=#cad3f5
+border-color=#494d64
 border-size=1
-border-radius=0
+border-radius=12
 
 [urgency=high]
-border-color=#ff3355
-text-color=#ff3355
+background-color=#24273afa
+border-color=#ed8796
+text-color=#ed8796
 default-timeout=0
 
 [urgency=normal]
-border-color=#9b59d0
-text-color=#c0c0c0
+background-color=#24273afa
+border-color=#c6a0f6
+text-color=#cad3f5
 default-timeout=5000
 
 [urgency=low]
-border-color=#1a1a1a
-text-color=#555555
+background-color=#24273afa
+border-color=#494d64
+text-color=#a5adcb
 default-timeout=3000
