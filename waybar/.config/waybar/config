@@ -22,12 +22,6 @@
     "on-scroll-down": "hyprctl dispatch workspace e-1"
   },
 
-  "hyprland/window": {
-    "format": "{}",
-    "max-length": 50,
-    "separate-outputs": true
-  },
-
   "clock": {
     "format": "  {:%H:%M}",
     "format-alt": "  {:%A, %d %B %Y}",
